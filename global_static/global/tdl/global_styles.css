@@ -1,0 +1,188 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Corpo da página */
+body {
+    background: #008DD5;
+}
+
+/* Cabeçalho */
+header {
+    padding: 20px;
+    text-align: center;
+    background: #0d1317ea;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 50px;
+}
+
+header a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+}
+
+/* Conteúdo principal */
+.main {
+    background: white;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.content {
+    background: rgba(0, 0, 0, 0.473);
+}
+
+/* Formulários e botões */
+.form-buttons {
+    display: flex;
+    gap: 10px; /* Espaçamento entre os botões */
+    justify-content: flex-end; /* Alinha os botões à direita */
+    padding: 20px;
+}
+
+.button {
+    display: inline-block;
+    background: #4E9CAF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    text-decoration: none;
+    cursor: pointer;
+    height: 100%;
+    width: 80px;
+}
+
+.button-page {
+    margin-top: 20px; /* Espaçamento entre o formulário e o botão */
+    height: 50%;
+}
+
+.button-page-update {
+    margin-top: 10px; /* Espaçamento entre o formulário e o botão */
+    height: 20%;
+}
+
+.button-page-add {
+    margin-top: 20px; /* Espaçamento entre o formulário e o botão */
+    height: 30%;
+}
+
+.button:hover {
+    background: #357a8e; /* Tom um pouco mais escuro */
+}
+
+/* Formulário de página */
+.form-content {
+    text-align: center;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center; /* Centraliza o formulário horizontalmente */
+    padding: 20px;
+}
+
+.form-page {
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px; /* Define uma largura máxima para o formulário */
+}
+
+/* Grupos de formulário */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-container {
+    font-size: 1.5em;
+}
+
+.form-container input {
+    width: 80%;
+    height: 35px;
+    font-size: 1em;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Rodapé */
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #0d1317ea;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+    padding: 15px;
+    font-size: 1.2em;
+}
+
+footer a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+/* Alertas */
+.alert {
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* Informações e botões de ação */
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 15px solid rgba(255, 255, 255, 0.85);
+}
+
+.info-details p {
+    margin: 5px 0;
+    font-size: 1em;
+}
+
+.info-actions {
+    display: flex;
+    align-items: center;
+}
+
+.info-actions label {
+    margin-right: 10px;
+}
