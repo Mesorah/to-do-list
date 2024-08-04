@@ -23,11 +23,12 @@
                         </form>
                     </div>
                     <div class="info-actions">
-                        <label for="completed-{{ informat.id }}">Completed</label>
                         <input type="checkbox" id="completed-{{ informat.id }}" name="completed" value="completed" {% if informat.completed %}checked{% endif %} disabled>
+                        <span class="custom-checkbox"></span>
+                        <label for="completed-{{ informat.id }}">Completed</label>
                     </div>
                 </div>
-            </div>
+            </div><br>
         {% endfor %}
 
         <div class="form-buttons">

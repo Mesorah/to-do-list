@@ -6,7 +6,8 @@
 
 /* Corpo da página */
 body {
-    background: #008DD5;
+    background: linear-gradient(to right, #150050,  #3D1FF5);
+    /* background: #008DD5; */
 }
 
 /* Cabeçalho */
@@ -25,7 +26,7 @@ header a {
 
 /* Conteúdo principal */
 .main {
-    background: white;
+    background: #150050;
     padding: 20px;
     margin: 0 auto;
     max-width: 1200px;
@@ -53,10 +54,10 @@ header a {
 .page-item {
     display: inline-block;
     padding: 0.5rem 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid #3d9af1;
     border-radius: 4px;
-    background-color: #f8f9fa;
-    color: #007bff;
+    background-color: #3d9af1;
+    color: #ffffff;
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
 }
@@ -90,6 +91,49 @@ form {
     display: inline;
 }
 
+/* Formulário de busca */
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 5px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.search-input {
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 1em;
+    width: 250px;
+    outline: none;
+}
+
+.search-button {
+    background: #007bff;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-button i {
+    font-size: 1.2em;
+}
+
+
 .form-buttons {
     display: flex;
     gap: 10px; /* Espaçamento entre os botões */
@@ -99,7 +143,7 @@ form {
 
 .button {
     display: inline-block;
-    background: #4E9CAF;
+    background: #25008b;
     padding: 10px;
     text-align: center;
     border-radius: 5px;
@@ -177,7 +221,7 @@ footer {
     background: #0d1317ea;
     color: rgba(255, 255, 255, 0.85);
     text-align: center;
-    padding: 15px;
+    padding: 8px;
     font-size: 1.2em;
 }
 
@@ -220,23 +264,121 @@ footer a {
 
 /* Informações e botões de ação */
 .info-container {
+    border-radius: 8px; /* Ajuste o valor para o arredondamento desejado */
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start; /* Alinhe os itens ao início */
     padding: 15px;
-    border-bottom: 15px solid rgba(255, 255, 255, 0.85);
+    border: 1px solid #555; /* Adicione uma borda para visualizar o contorno */
 }
 
 .info-details p {
+    color: white;
     margin: 5px 0;
     font-size: 1em;
 }
 
 .info-actions {
+    color: white;
     display: flex;
     align-items: center;
 }
 
 .info-actions label {
     margin-right: 10px;
+}
+
+/* Oculta o checkbox padrão */
+.info-actions input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Estilo do container do checkbox */
+.info-actions {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo do checkbox customizado */
+.info-actions input[type="checkbox"] + .custom-checkbox {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Checkbox marcado */
+.info-actions input[type="checkbox"]:checked + .custom-checkbox {
+    background: #007bff;
+    border-color: #007bff;
+}
+
+/* Remover a marca do checkbox */
+.info-actions .custom-checkbox::after {
+    content: none;
+}
+
+/* Estilo do texto ao lado do checkbox */
+.info-actions label {
+    margin-left: 10px;
+}
+
+/* Regras gerais para telas menores */
+@media (max-width: 768px) {
+    .main {
+        padding: 10px;
+        max-width: 100%; /* Ajuste a largura máxima para 100% */
+    }
+
+    .search-input {
+        width: 200px; /* Reduza a largura do input de busca em telas menores */
+    }
+
+    .form-page {
+        padding: 20px; /* Reduza o padding do formulário em telas menores */
+        max-width: 100%; /* Ajuste a largura máxima para 100% */
+    }
+
+    .form-buttons {
+        flex-direction: column; /* Alinhe os botões em coluna */
+        gap: 10px; /* Aumente o espaçamento entre os botões */
+    }
+
+    .info-container {
+        flex-direction: column; /* Alinhe os itens em coluna */
+        align-items: stretch; /* Estique os itens para ocupar toda a largura */
+    }
+}
+
+/* Regras para telas muito pequenas (smartphones em retrato) */
+@media (max-width: 480px) {
+    .search-input {
+        width: 100%; /* Ajuste o input de busca para ocupar toda a largura */
+    }
+
+    .info-details p {
+        font-size: 0.9em; /* Reduza o tamanho da fonte em telas menores */
+    }
+
+    .button {
+        width: 100%; /* Ajuste a largura dos botões para ocupar toda a largura disponível */
+        height: auto; /* Ajuste a altura para auto */
+        padding: 10px; /* Ajuste o padding */
+        font-size: 0.9em; /* Reduza o tamanho da fonte */
+    }
+
+    .info-actions {
+        flex-direction: column; /* Alinhe os itens em coluna */
+        align-items: flex-start; /* Alinhe os itens ao início */
+    }
+
+    .info-actions label {
+        margin-left: 0; /* Remova a margem esquerda dos labels */
+    }
 }
