@@ -12,4 +12,5 @@ urlpatterns = [
     path('remove_task', views.remove_task, name='remove_task'),
     path('update_task_page', views.update_task_page, name='update_task_page'),
     path('update_task', views.update_task, name='update_task'),
+    path('item/search/', views.search, name="search"),
 ]

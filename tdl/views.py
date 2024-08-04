@@ -3,12 +3,22 @@ from tdl.models import ItemList
 from tdl.form import ItemForm, UpdateForm
 from django.urls import reverse
 from django.contrib import messages
+from utils.pagination import make_pagination
+import os
+from django.http import Http404
+from django.db.models import Q
+
+PER_PAGE = int(os.environ.get('PER_PAGE', 2))
 
 
 def home(request):
     information = ItemList.objects.all().order_by('-id')
+
+    page_obj, pagination_range = make_pagination(request, information, PER_PAGE) # noqa E501
+
     return render(request, 'tdl/pages/home.html', context={
-        'information': information,
+        'information': page_obj,
+        'pagination_range': pagination_range,
         'title': 'Home',
     })
 
@@ -122,4 +132,25 @@ def update_task(request):
         'msg': 'Edit',
         'form': form,
         'checked': checked
+    })
+
+
+def search(request):
+    search_term = request.GET.get('q', '').strip()
+
+    if not search_term:
+        raise Http404()
+
+    information = ItemList.objects.filter(
+        Q(name__icontains=search_term),
+    ).order_by('-id')
+
+    page_obj, pagination_range = make_pagination(request, information, PER_PAGE) # noqa E501
+
+    return render(request, 'tdl/pages/search.html', context={
+        'title': f'Search for "{search_term}" |',
+        'search_term': search_term,
+        'information': page_obj,
+        'pagination_range': pagination_range,
+        'additional_url_query': f'&q={search_term}',
     })

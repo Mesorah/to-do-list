@@ -11,6 +11,16 @@
                         <p><strong>Name:</strong> {{ informat.name }}</p>
                         <p><strong>Updated at:</strong> {{ informat.updated_at }}</p>
                         <p><strong>Created at:</strong> {{ informat.created_at }}</p>
+                        <form action="{% url 'tdl:update_task_page' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ informat.id }}">
+                            <button type="submit" class="button">Update</button>
+                        </form>
+                        <form action="{% url 'tdl:remove_task_page' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ informat.id }}">
+                            <button type="submit" class="button">Remove</button>
+                        </form>
                     </div>
                     <div class="info-actions">
                         <label for="completed-{{ informat.id }}">Completed</label>
@@ -25,18 +35,6 @@
                 {% csrf_token %}
                 <input type="hidden" name="item_id" value="{{ informat.id }}">
                 <button type="submit" class="button">Add</button>
-            </form>
-
-            <form action="{% url 'tdl:remove_task_page' %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="item_id" value="{{ informat.id }}">
-                <button type="submit" class="button">Remove</button>
-            </form>
-
-            <form action="{% url 'tdl:update_task_page' %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="item_id" value="{{ informat.id }}">
-                <button type="submit" class="button">Update</button>
             </form>
         </div>
     </div>
