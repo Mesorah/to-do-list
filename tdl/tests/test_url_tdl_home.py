@@ -18,4 +18,4 @@ class TestURlTDLHome(TestCase):
 
     def test_url_home_returns_correct_template(self):
         url = self.client.get(reverse('tdl:home'))
-        self.assertTemplateUsed(url, 'tdl/home.html')
+        self.assertTemplateUsed(url, 'tdl/pages/home.html')

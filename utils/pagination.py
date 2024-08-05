@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator
+import math
 
 
 def make_pagination_range(
@@ -7,7 +8,7 @@ def make_pagination_range(
     current_page,
 ):
     total_pages = len(page_range)
-    middle_range = qty_pages // 2
+    middle_range = math.ceil(qty_pages // 2)
 
     # Define o início e o fim do intervalo
     start_range = max(current_page - middle_range, 0)

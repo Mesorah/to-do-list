@@ -5,7 +5,7 @@
                 <p><strong>Name:</strong> {{ item.name }}</p>
                 <p><strong>Updated at:</strong> {{ item.updated_at }}</p>
                 <p><strong>Created at:</strong> {{ item.created_at }}</p>
-                <form action="{% url 'tdl:update_task_page' %}" method="POST">
+                <form action="{% url 'tdl:update_task_page' item.id  %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="item_id" value="{{ item.id }}">
                     <button type="submit" class="button">Update</button>

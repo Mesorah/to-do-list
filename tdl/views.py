@@ -40,8 +40,7 @@ def add_task(request):
         if form.is_valid():
             completed = form.cleaned_data['completed']
             new_item = ItemList(name=form.cleaned_data['name'])
-            if completed is not None:
-                new_item.completed = completed
+            new_item.completed = completed
             new_item.save()
             return redirect('tdl:home')
     else:
