@@ -24,6 +24,10 @@ header a {
     text-decoration: none;
 }
 
+a {
+    text-decoration: none;
+}
+
 /* Conteúdo principal */
 .main {
     background: #150050;

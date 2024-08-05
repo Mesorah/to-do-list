@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from tdl.models import ItemList
 from tdl.form import ItemForm, UpdateForm
 from django.urls import reverse
@@ -7,6 +7,7 @@ from utils.pagination import make_pagination
 import os
 from django.http import Http404
 from django.db.models import Q
+
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 2))
 
@@ -55,39 +56,49 @@ def add_task(request):
     })
 
 
-def remove_task_page(request):
-    form = ItemForm()
+# def remove_task_page(request):
+#     form = ItemForm()
 
-    return render(request, 'tdl/partials/task_page.html', context={
-        'title': 'Remove',
-        'url_action': reverse('tdl:remove_task'),
-        'msg': 'Remove',
-        'form': form,
-    })
+#     return render(request, 'tdl/partials/task_page.html', context={
+#         'title': 'Remove',
+#         'url_action': reverse('tdl:remove_task'),
+#         'msg': 'Remove',
+#         'form': form,
+#     })
+
+
+# def remove_task(request):
+#     if request.method == 'POST':
+#         form = ItemForm(request.POST)
+#         if form.is_valid():
+#             item_to_delete = form.cleaned_data['name']
+#             try:
+#                 item_to_delete = ItemList.objects.get(name=item_to_delete)
+#                 item_to_delete.delete()
+#             except ItemList.DoesNotExist:
+#                 messages.error(request, 'Item não encontrado.')
+#                 return redirect('tdl:remove_task')
+
+#             return redirect('tdl:home')
+#     else:
+#         form = ItemForm()
+
+#     return render(request, 'tdl/partials/task_page.html', context={
+#         'title': 'Remove',
+#         'url_action': reverse('tdl:remove_task'),
+#         'msg': 'Remove',
+#         'form': form,
+#     })
+
+
+def remove_task_page(request, id):
+    # item = get_object_or_404(ItemList, pk=id)
+    item = ItemList.objects.filter(pk=id).order_by('-id')
+    print(item)
 
 
 def remove_task(request):
-    if request.method == 'POST':
-        form = ItemForm(request.POST)
-        if form.is_valid():
-            item_to_delete = form.cleaned_data['name']
-            try:
-                item_to_delete = ItemList.objects.get(name=item_to_delete)
-                item_to_delete.delete()
-            except ItemList.DoesNotExist:
-                messages.error(request, 'Item não encontrado.')
-                return redirect('tdl:remove_task')
-
-            return redirect('tdl:home')
-    else:
-        form = ItemForm()
-
-    return render(request, 'tdl/partials/task_page.html', context={
-        'title': 'Remove',
-        'url_action': reverse('tdl:remove_task'),
-        'msg': 'Remove',
-        'form': form,
-    })
+    pass
 
 
 def update_task_page(request):
@@ -154,3 +165,16 @@ def search(request):
         'pagination_range': pagination_range,
         'additional_url_query': f'&q={search_term}',
     })
+
+
+def item_visualization(request, id):
+    item = get_object_or_404(ItemList, pk=id)
+
+    return render(request, 'tdl/partials/task_view.html', context={
+        'title': 'Item visualization',
+        'item': item,
+    })
+
+
+def test(request):
+    return render(request, 'tdl/partials/test.html')

@@ -8,7 +8,7 @@
             <div class="content">
                 <div class="info-container">
                     <div class="info-details">
-                        <p><strong>Name:</strong> {{ informat.name }}</p>
+                        <p><strong><a href="{% url 'tdl:visualization' informat.id  %}">Name:</a></strong> {{ informat.name }}</p>
                         <p><strong>Updated at:</strong> {{ informat.updated_at }}</p>
                         <p><strong>Created at:</strong> {{ informat.created_at }}</p>
                         <form action="{% url 'tdl:update_task_page' %}" method="POST">
