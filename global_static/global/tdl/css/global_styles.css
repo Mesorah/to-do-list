@@ -82,14 +82,6 @@ a {
     color: #0056b3;
 }
 
-.dots {
-    cursor: default;
-    padding: 0.5rem;
-    background: none;
-    border: none;
-    color: #6c757d;
-}
-
 /* Formulários e botões */
 form {
     display: inline;
@@ -136,7 +128,6 @@ form {
 .search-button i {
     font-size: 1.2em;
 }
-
 
 .form-buttons {
     display: flex;
@@ -214,6 +205,27 @@ form {
     font-size: 1em;
     padding: 10px;
     box-sizing: border-box;
+}
+
+.form-group-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.checkbox-container-update {
+    padding-top: 25px;
+    width: 30%;
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: 10%;
+}
+
+.form-group-checkbox-add {
+    display: flex;
+    align-items: center; /* Alinha verticalmente os itens no centro */
+    margin-bottom: 20px;
 }
 
 /* Rodapé */
@@ -299,7 +311,6 @@ footer a {
     cursor: pointer;
 }
 
-/* Estilo do container do checkbox */
 .info-actions {
     position: relative;
     display: flex;
@@ -315,18 +326,29 @@ footer a {
     border: 2px solid #ddd;
     border-radius: 3px;
     cursor: pointer;
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura e altura */
 }
 
-/* Checkbox marcado */
-.info-actions input[type="checkbox"]:checked + .custom-checkbox {
-    background: #007bff;
-    border-color: #007bff;
+/* Estilo do ícone de seleção */
+.info-actions input[type="checkbox"] + .custom-checkbox::after {
+    content: '';
+    position: absolute;
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    width: 12px; /* Ajuste a largura do ícone */
+    height: 12px; /* Ajuste a altura do ícone */
+    background: rgb(52, 52, 255); /* Cor do ícone */
+    border-radius: 2px; /* Borda arredondada do ícone */
+    transform: translate(-50%, -50%); /* Centraliza o ícone */
+    opacity: 0; /* Inicialmente invisível */
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura e altura */
 }
 
-/* Remover a marca do checkbox */
-.info-actions .custom-checkbox::after {
-    content: none;
+/* Exibe o ícone de seleção quando o checkbox está marcado */
+.info-actions input[type="checkbox"]:checked + .custom-checkbox::after {
+    opacity: 1;
 }
+
 
 /* Estilo do texto ao lado do checkbox */
 .info-actions label {

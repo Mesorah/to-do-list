@@ -64,13 +64,12 @@ def remove_task_page(request, id):
 
 def update_task_page(request, id):
     item = get_object_or_404(ItemList, pk=id)
+    complet = item.completed
 
     if request.method == 'POST':
         form = UpdateForm(request.POST)
         if form.is_valid():
             nome = form.cleaned_data['name']
-            completed = form.cleaned_data['completed']
-            print(completed)
             item.name = nome
             item.save()
             return redirect(reverse('tdl:home'))
@@ -83,7 +82,7 @@ def update_task_page(request, id):
         'url_action': reverse('tdl:update_task_page', args=[id]),
         'msg': 'Edit',
         'form': form,
-        'completed': completed
+        'completed': complet
     })
 
 

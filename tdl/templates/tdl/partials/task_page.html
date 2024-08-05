@@ -11,7 +11,7 @@
                 {% if msg == 'Add' %}
                     {% for field in form %}
 
-                        <div class="form-group">
+                        <div class="form-group checkbox-container form-group-checkbox-add">
                             {{ field.label_tag }}
                             {{ field }}
                             {% if field.errors %}
@@ -35,17 +35,21 @@
                             {% endif %}
                             
                         </div>
-                    {% else %}
-                        <div class="form-group">
-                            {{ form.completed.label_tag }}
-                            <input type="checkbox" name="{{ form.completed.name }}" id="{{ form.completed.id_for_label }}" {% if completed %}checked{% endif %}>
-                            {% if form.completed.errors %}
-                                <div class="error-message">
-                                    {{ form.completed.errors }}
+                        {% else %}
+                            <div class="form-group">
+                                {{ form.name.label }}
+                                {{ form.name }}<br>
+                                <div class="checkbox-container-update form-group-checkbox">
+                                    {{ form.completed.label_tag }}
+                                    <input type="checkbox" name="{{ form.completed.name }}" id="{{ form.completed.id_for_label }}" {% if completed == True %}checked{% endif %}>
                                 </div>
-                            {% endif %}
-                        </div>
-                {% endif %}
+                                {% if form.completed.errors %}
+                                    <div class="error-message">
+                                        {{ form.completed.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
             </div>
 
             {% if messages %}
