@@ -8,7 +8,7 @@
             {% csrf_token %}
 
             <div class="form-container">
-                {% if msg != 'Remove' %}
+                {% if msg == 'Add' %}
                     {% for field in form %}
 
                         <div class="form-group">
@@ -23,7 +23,7 @@
                             
                         </div>
                     {% endfor %}
-                {% else %}
+                {% elif msg == 'Remove' %}
                         <div class="form-group">
                             {{ form.name.label }}
                             {{ form.name }}
@@ -34,6 +34,16 @@
 
                             {% endif %}
                             
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            {{ form.completed.label_tag }}
+                            <input type="checkbox" name="{{ form.completed.name }}" id="{{ form.completed.id_for_label }}" {% if completed %}checked{% endif %}>
+                            {% if form.completed.errors %}
+                                <div class="error-message">
+                                    {{ form.completed.errors }}
+                                </div>
+                            {% endif %}
                         </div>
                 {% endif %}
             </div>

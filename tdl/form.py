@@ -4,14 +4,9 @@ from tdl.models import ItemList
 
 
 class ItemForm(forms.ModelForm):
-    completed = forms.BooleanField(
-        label='completed',
-        required=False
-    )
-
     class Meta:
         model = ItemList
-        fields = ['name']
+        fields = ['name', 'completed']
 
         labels = {
             'name': 'Name',
@@ -28,9 +23,7 @@ class UpdateForm(forms.Form):
     name = forms.CharField(
         label='Nome do item para atulizar'
     )
-    new_name = forms.CharField(
-        label='Novo nome'
-    )
+
     completed = forms.BooleanField(
         label='completed',
         required=False
