@@ -6,24 +6,8 @@
     <div class="main-content">
         <form action="{{ url_action }}" method="POST" class="form-page">
             {% csrf_token %}
-
             <div class="form-container">
-                {% if msg == 'Add' %}
-                    {% for field in form %}
-
-                        <div class="form-group checkbox-container form-group-checkbox-add">
-                            {{ field.label_tag }}
-                            {{ field }}
-                            {% if field.errors %}
-                                <div class="error-message">
-                                    {{ field.errors }}
-                                </div>
-
-                            {% endif %}
-                            
-                        </div>
-                    {% endfor %}
-                {% elif msg == 'Remove' %}
+                {% if msg == 'Remove' %}
                         <div class="form-group">
                             {{ form.name.label }}
                             {{ form.name }}
@@ -37,7 +21,7 @@
                         </div>
                         {% else %}
                             <div class="form-group">
-                                {{ form.name.label }}
+                                {{ form.name.label }}:
                                 {{ form.name }}<br>
                                 <div class="checkbox-container-update form-group-checkbox">
                                     {{ form.completed.label_tag }}
@@ -64,9 +48,11 @@
             {% if msg == 'Remove' %}
                 <button type="submit" class="button button-page">{{ msg }}</button>
             {% elif msg == 'Add' %}
-                <button type="submit" class="button button-page button-page-add">{{ msg }}</button>
+                <button type="submit" class="button button-page button-page-add-add">{{ msg }}</button>
+                <a href="{% url 'tdl:home' %}" class="button button-page button-page-add button-back">Voltar</a>
             {% else %}
                 <button type="submit" class="button button-page button-page-update">{{ msg }}</button>
+                <a href="{% url 'tdl:home' %}" class="button button-page button-page-add button-back">Voltar</a>
             {% endif %}
         </form>
     </div>

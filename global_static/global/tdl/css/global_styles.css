@@ -163,7 +163,12 @@ form {
 
 .button-page-add {
     margin-top: 20px; /* Espaçamento entre o formulário e o botão */
-    height: 30%;
+    height: 10%;
+}
+
+.button-page-add-add {
+    margin-top: 20px; /* Espaçamento entre o formulário e o botão */
+    height: 22%;
 }
 
 .button:hover {

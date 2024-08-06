@@ -14,12 +14,12 @@
                         <form action="{% url 'tdl:remove_task_page' informat.id %}" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="item_id" value="{{ informat.id }}">
-                            <button type="submit" class="button">Remove</button>
+                            <button type="submit" class="button" onclick="return confirm('Are you sure you want to remove this item?');">Remove</button>
                         </form>
                         <form action="{% url 'tdl:update_task_page' informat.id  %}" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="item_id" value="{{ informat.id }}">
-                            <button type="submit" class="button">Update</button>
+                            <button type="submit" class="button">Edit</button>
                         </form>
                     </div>
                     <div class="info-actions">
