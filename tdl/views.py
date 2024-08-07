@@ -6,6 +6,7 @@ from utils.pagination import make_pagination
 import os
 from django.http import Http404
 from django.db.models import Q
+from django.contrib import messages
 
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 2))
@@ -61,6 +62,14 @@ def remove_task_page(request, id):
     return redirect('tdl:home')
 
 
+def update_task(request, id):
+    form = UpdateForm(request.POST) # noqa F841
+
+    print('opa')
+
+    return redirect('tdl:update_task_page', id=id)
+
+
 def update_task_page(request, id):
     item = get_object_or_404(ItemList, pk=id)
     complet = item.completed
@@ -78,17 +87,19 @@ def update_task_page(request, id):
             else:
                 item.name = nome
 
-            att_completed = form.cleaned_data['completed'] #####
+            att_completed = form.cleaned_data['completed']
             print(att_completed, 'att')
             item.completed = complet
-            # item.completed = att_completed
+            item.completed = att_completed
             item.save()
             print(complet, 'complet depois no save')
             print('passei pelo save')
 
-            if item.name != item_before_update.name or item.completed != complet_before_update:
+            if item.name != item_before_update.name or item.completed != complet_before_update: # noqa E501
                 print('opa')
                 return redirect('/')
+            else:
+                messages.warning(request, 'Altere alguma coisa ou aperte em voltar') # noqa E501
 
     else:
         form = UpdateForm()

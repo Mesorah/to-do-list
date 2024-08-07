@@ -16,7 +16,7 @@
                             <input type="hidden" name="item_id" value="{{ informat.id }}">
                             <button type="submit" class="button" onclick="return confirm('Are you sure you want to remove this item?');">Remove</button>
                         </form>
-                        <form action="{% url 'tdl:update_task_page' informat.id  %}" method="POST">
+                        <form action="{% url 'tdl:update_task' informat.id  %}" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="item_id" value="{{ informat.id }}">
                             <button type="submit" class="button">Edit</button>
