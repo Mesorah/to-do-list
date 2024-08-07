@@ -64,6 +64,10 @@ def remove_task_page(request, id):
 def update_task_page(request, id):
     item = get_object_or_404(ItemList, pk=id)
     complet = item.completed
+    print(complet, 'complet no inicio')
+
+    item_before_update = get_object_or_404(ItemList, pk=id)
+    complet_before_update = item_before_update.completed
 
     if request.method == 'POST':
         form = UpdateForm(request.POST)
@@ -74,10 +78,17 @@ def update_task_page(request, id):
             else:
                 item.name = nome
 
-            att_completed = form.cleaned_data['completed']
+            att_completed = form.cleaned_data['completed'] #####
+            print(att_completed, 'att')
             item.completed = complet
-            item.completed = att_completed
+            # item.completed = att_completed
             item.save()
+            print(complet, 'complet depois no save')
+            print('passei pelo save')
+
+            if item.name != item_before_update.name or item.completed != complet_before_update:
+                print('opa')
+                return redirect('/')
 
     else:
         form = UpdateForm()
@@ -88,7 +99,6 @@ def update_task_page(request, id):
         'msg': 'Edit',
         'form': form,
         'completed': complet,
-        'idiz': id
     })
 
 

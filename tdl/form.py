@@ -26,5 +26,6 @@ class UpdateForm(forms.Form):
 
     completed = forms.BooleanField(
         label='completed',
-        required=False
+        required=False,
+        initial=None
     )
