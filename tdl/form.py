@@ -1,6 +1,5 @@
 from django import forms
 from tdl.models import ItemList
-# from django.core.exceptions import ValidationError
 
 
 class ItemForm(forms.ModelForm):
@@ -21,7 +20,8 @@ class ItemForm(forms.ModelForm):
 
 class UpdateForm(forms.Form):
     name = forms.CharField(
-        label='Nome do item para atulizar'
+        label='Nome do item para atualizar',
+        required=False
     )
 
     completed = forms.BooleanField(

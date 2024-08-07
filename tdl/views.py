@@ -69,19 +69,26 @@ def update_task_page(request, id):
         form = UpdateForm(request.POST)
         if form.is_valid():
             nome = form.cleaned_data['name']
-            item.name = nome
+            if nome == '' and len(item.name) >= 1:
+                nome = item.name
+            else:
+                item.name = nome
+
+            att_completed = form.cleaned_data['completed']
+            item.completed = complet
+            item.completed = att_completed
             item.save()
-            return redirect(reverse('tdl:home'))
 
     else:
         form = UpdateForm()
 
     return render(request, 'tdl/partials/task_page.html', context={
-        'title': 'Update',
+        'title': 'Edit',
         'url_action': reverse('tdl:update_task_page', args=[id]),
         'msg': 'Edit',
         'form': form,
-        'completed': complet
+        'completed': complet,
+        'idiz': id
     })
 
 

@@ -12,5 +12,5 @@ urlpatterns = [
     path('remove_task_page/<int:id>/', views.remove_task_page, name='remove_task_page'), # noqa E501
     path('update_task_page/<int:id>/', views.update_task_page, name='update_task_page'), # noqa E501
     path('item/search/', views.search, name="search"),
-    path('item/<int:id>', views.item_visualization, name="visualization")
+    path('item/<int:id>', views.item_visualization, name="visualization"),
 ]
