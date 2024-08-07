@@ -4,7 +4,7 @@ from tdl import views
 
 app_name = 'tdl'
 
-# mudei o remove, e o update depois alterar se necessario
+
 urlpatterns = [
     path('',  views.home, name='home'),
     path('add_task_page', views.add_task_page, name='add_task_page'),

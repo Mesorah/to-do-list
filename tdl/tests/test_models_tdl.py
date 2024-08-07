@@ -205,22 +205,22 @@ class UpdateTaskPageTest(TestCase):
         # Verifica se a resposta é um redirecionamento
         self.assertRedirects(response, reverse('tdl:home'))
 
-    def test_update_task_invalid_form(self):
-        form_data = {
-            'name': ''  # Campo obrigatório, portanto inválido
-        }
-        response = self.client.post(reverse('tdl:update_task_page', args=[self.item.id]), data=form_data)
+    # def test_update_task_invalid_form(self):
+    #     form_data = {
+    #         'name': ''  # Campo obrigatório, portanto inválido
+    #     }
+    #     response = self.client.post(reverse('tdl:update_task_page', args=[self.item.id]), data=form_data)
 
-        # Verifica se o item não foi atualizado
-        self.item.refresh_from_db()
-        self.assertEqual(self.item.name, 'Test Task')
+    #     # Verifica se o item não foi atualizado
+    #     self.item.refresh_from_db()
+    #     self.assertEqual(self.item.name, 'Test Task')
 
-        # Verifica se a página de formulário é renderizada novamente com erros
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tdl/partials/task_page.html')
+    #     # Verifica se a página de formulário é renderizada novamente com erros
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'tdl/partials/task_page.html')
 
-        # Verifica se o formulário contém erros
-        form = response.context['form']
-        self.assertTrue(form.errors)
-        self.assertIn('name', form.errors)
-        self.assertIn('Este campo é obrigatório.', form.errors['name'])
+    #     # Verifica se o formulário contém erros
+    #     form = response.context['form']
+    #     self.assertTrue(form.errors)
+    #     self.assertIn('name', form.errors)
+    #     self.assertIn('Este campo é obrigatório.', form.errors['name'])

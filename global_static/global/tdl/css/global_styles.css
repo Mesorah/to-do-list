@@ -12,7 +12,7 @@ body {
 
 /* Cabeçalho */
 header {
-    padding: 20px;
+    padding: 0, 20px, 20px, 20px;
     text-align: center;
     background: #0d1317ea;
     color: rgba(255, 255, 255, 0.85);
@@ -358,6 +358,98 @@ footer a {
 /* Estilo do texto ao lado do checkbox */
 .info-actions label {
     margin-left: 10px;
+}
+
+
+/* authors */
+
+.register-page-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #150050;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.register-header-section {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.register-form-section {
+    display: flex;
+    justify-content: center;
+}
+
+.register-link {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #7e2525;
+    background-color: #ff4d4d; /* Um tom de vermelho mais suave */
+    color: #fff; /* Cor do texto em branco para contraste */
+    text-decoration: none;
+    border-radius: 5px; /* Arredondamento das bordas */
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s; /* Efeito suave na cor de fundo e texto */
+}
+
+.register-link:hover {
+    background-color: #b52a2a; /* Tom de vermelho mais escuro ao passar o mouse */
+    color: #fff; /* Mantém o texto em branco */
+    border-color: #b52a2a; /* Atualiza a cor da borda */
+}
+
+.register-link:active {
+    background-color: #a52a2a; /* Tom ainda mais escuro quando o link é clicado */
+    border-color: #a52a2a;
+}
+
+.user-register-form {
+    width: 100%;
+}
+
+.form-field-group {
+    margin-bottom: 15px;
+}
+
+.form-field-group label {
+    color: #fff;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-field-group input,
+.form-field-group select,
+.form-field-group textarea {
+    width: 96.5%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-field-errors {
+    color: #ff0000;
+    margin-top: 5px;
+}
+
+.form-submit-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-submit-button:hover {
+    background-color: #0056b3;
 }
 
 /* Regras gerais para telas menores */

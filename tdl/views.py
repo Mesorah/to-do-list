@@ -65,15 +65,12 @@ def remove_task_page(request, id):
 def update_task(request, id):
     form = UpdateForm(request.POST) # noqa F841
 
-    print('opa')
-
     return redirect('tdl:update_task_page', id=id)
 
 
 def update_task_page(request, id):
     item = get_object_or_404(ItemList, pk=id)
     complet = item.completed
-    print(complet, 'complet no inicio')
 
     item_before_update = get_object_or_404(ItemList, pk=id)
     complet_before_update = item_before_update.completed
@@ -88,15 +85,11 @@ def update_task_page(request, id):
                 item.name = nome
 
             att_completed = form.cleaned_data['completed']
-            print(att_completed, 'att')
             item.completed = complet
             item.completed = att_completed
             item.save()
-            print(complet, 'complet depois no save')
-            print('passei pelo save')
 
             if item.name != item_before_update.name or item.completed != complet_before_update: # noqa E501
-                print('opa')
                 return redirect('/')
             else:
                 messages.warning(request, 'Altere alguma coisa ou aperte em voltar') # noqa E501
