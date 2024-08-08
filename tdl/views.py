@@ -7,13 +7,15 @@ import os
 from django.http import Http404
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 2))
 
 
+@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
 def home(request):
-    information = ItemList.objects.all().order_by('-id')
+    information = ItemList.objects.filter(user=request.user).order_by('-id')
 
     page_obj, pagination_range = make_pagination(request, information, PER_PAGE) # noqa E501
 
@@ -24,6 +26,7 @@ def home(request):
     })
 
 
+@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
 def add_task_page(request):
     form = ItemForm()
 
@@ -35,12 +38,14 @@ def add_task_page(request):
     })
 
 
+@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
 def add_task(request):
     if request.method == 'POST':
         form = ItemForm(request.POST)
         if form.is_valid():
             completed = form.cleaned_data['completed']
             new_item = ItemList(name=form.cleaned_data['name'])
+            new_item.user = request.user
             new_item.completed = completed
             new_item.save()
             return redirect('tdl:home')
@@ -55,28 +60,32 @@ def add_task(request):
     })
 
 
+@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
 def remove_task_page(request, id):
-    item = get_object_or_404(ItemList, pk=id)
+    item = get_object_or_404(ItemList, pk=id, user=request.user)
     item.delete()
+    messages.success(request, 'Tarefa removida com sucesso!')
 
     return redirect('tdl:home')
 
 
+@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
 def update_task(request, id):
     form = UpdateForm(request.POST) # noqa F841
 
     return redirect('tdl:update_task_page', id=id)
 
 
+@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
 def update_task_page(request, id):
-    item = get_object_or_404(ItemList, pk=id)
+    item = get_object_or_404(ItemList, pk=id, user=request.user)
     complet = item.completed
 
-    item_before_update = get_object_or_404(ItemList, pk=id)
+    item_before_update = get_object_or_404(ItemList, pk=id, user=request.user)
     complet_before_update = item_before_update.completed
 
     if request.method == 'POST':
-        form = UpdateForm(request.POST)
+        form = UpdateForm(request.POST, instance=item)
         if form.is_valid():
             nome = form.cleaned_data['name']
             if nome == '' and len(item.name) >= 1:
@@ -88,14 +97,15 @@ def update_task_page(request, id):
             item.completed = complet
             item.completed = att_completed
             item.save()
+            messages.success(request, 'Tarefa atualizada com sucesso!')
 
             if item.name != item_before_update.name or item.completed != complet_before_update: # noqa E501
-                return redirect('/')
+                return redirect('tdl:home')
             else:
-                messages.warning(request, 'Altere alguma coisa ou aperte em voltar') # noqa E501
+                messages.warning(request, 'Houve um erro ao atualizar a tarefa.') # noqa E501
 
     else:
-        form = UpdateForm()
+        form = UpdateForm(instance=item)
 
     return render(request, 'tdl/partials/task_page.html', context={
         'title': 'Edit',
@@ -127,8 +137,9 @@ def search(request):
     })
 
 
+@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
 def item_visualization(request, id):
-    item = get_object_or_404(ItemList, pk=id)
+    item = get_object_or_404(ItemList, pk=id, user=request.user)
 
     return render(request, 'tdl/partials/task_view.html', context={
         'title': 'Item visualization',

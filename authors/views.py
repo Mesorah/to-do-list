@@ -14,7 +14,7 @@ def author_register(request):
         if form.is_valid():
             form.save(commit=True)
             messages.success(request, 'Registrado com sucesso')
-            print('deu')
+            return redirect('authors:author_login')
     else:
         form = RegisterForm()
 
@@ -38,6 +38,7 @@ def author_login(request):
             if user is not None:
                 auth_login(request, user)
                 messages.success(request, 'Logado com sucesso')
+                return redirect('tdl:home')
     else:
         form = LoginForm()
 

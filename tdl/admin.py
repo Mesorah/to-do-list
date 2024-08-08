@@ -1,10 +1,5 @@
 from django.contrib import admin
-from tdl.models import ItemList, Author
-
-
-@admin.register(Author)
-class AuthorAdmin(admin.ModelAdmin):
-    pass
+from tdl.models import ItemList
 
 
 @admin.register(ItemList)

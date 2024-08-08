@@ -82,6 +82,11 @@ a {
     color: #0056b3;
 }
 
+.no-item-list {
+    color: #fff;
+    text-align: center;
+}
+
 /* Formulários e botões */
 form {
     display: inline;

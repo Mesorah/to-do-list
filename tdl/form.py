@@ -18,13 +18,16 @@ class ItemForm(forms.ModelForm):
         }
 
 
-class UpdateForm(forms.Form):
-    name = forms.CharField(
-        label='Nome do item para atualizar',
-        required=False
-    )
-
-    completed = forms.BooleanField(
-        label='completed',
-        required=False,
-    )
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model = ItemList
+        fields = ['name', 'completed']
+        labels = {
+            'name': 'Nome do item',
+            'completed': 'Concluído',
+        }
+        error_messages = {
+            'name': {
+                'required': 'Este campo é obrigatório.',
+            }
+        }
