@@ -18,11 +18,14 @@ def author_register(request):
     else:
         form = RegisterForm()
 
+    print(request.user)
+
     return render(request, 'authors/pages/authors_authenticate.html', context={
         'form': form,
         'url_action': reverse('authors:author_register'),
         'title': 'Register',
-        'msg': 'Register'
+        'msg': 'Register',
+        'user': request.user
     })
 
 
@@ -39,6 +42,10 @@ def author_login(request):
                 auth_login(request, user)
                 messages.success(request, 'Logado com sucesso')
                 return redirect('tdl:home')
+
+            else:
+                messages.error(request, 'username or password is incorrect')
+
     else:
         form = LoginForm()
 
@@ -46,7 +53,7 @@ def author_login(request):
         'form': form,
         'url_action': reverse('authors:author_login'),
         'title': 'Login',
-        'msg': 'Login'
+        'msg': 'Login',
     })
 
 

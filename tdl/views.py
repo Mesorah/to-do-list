@@ -23,6 +23,7 @@ def home(request):
         'information': page_obj,
         'pagination_range': pagination_range,
         'title': 'Home',
+        'user': request.user
     })
 
 

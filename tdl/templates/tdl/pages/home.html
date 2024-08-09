@@ -12,7 +12,7 @@
             <div class="content">
                 <div class="info-container">
                     <div class="info-details">
-                        <p><strong><a href="{% url 'tdl:visualization' informat.id  %}">Name:</a></strong> {{ informat.name }}</p>
+                        <p><strong><a href="{% url 'tdl:visualization' informat.id  %}" class="name-form-list">Name:</a></strong> <span class="informat-name">{{ informat.name }}</span></p>
                         <p><strong>Updated at:</strong> {{ informat.updated_at }}</p>
                         <p><strong>Created at:</strong> {{ informat.created_at }}</p>
                         <form action="{% url 'tdl:remove_task_page' informat.id %}" method="POST">

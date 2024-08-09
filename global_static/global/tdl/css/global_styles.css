@@ -42,6 +42,10 @@ a {
     background: rgba(0, 0, 0, 0.473);
 }
 
+.to-do-list-header {
+    padding-top: 10px;
+}
+
 /* Estiliza a paginação */
 .pagination {
     display: flex;
@@ -104,6 +108,7 @@ form {
     align-items: center;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 25px;
+    margin: 0 auto;
     padding: 5px 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -163,7 +168,7 @@ form {
 
 .button-page-update {
     margin-top: 10px; /* Espaçamento entre o formulário e o botão */
-    height: 20%;
+    height: 20 %;
 }
 
 .button-page-add {
@@ -192,7 +197,7 @@ form {
 }
 
 .form-page {
-    background: #ffffff;
+    background: #1c0264;
     padding: 50px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -203,6 +208,7 @@ form {
 /* Grupos de formulário */
 .form-group {
     margin-bottom: 20px;
+    color: #ffffffd7;
 }
 
 .form-container {
@@ -455,6 +461,20 @@ footer a {
 
 .form-submit-button:hover {
     background-color: #0056b3;
+}
+
+.logout-user {
+    float: right;
+    margin-top: 27px;
+    margin-right: 40px;
+}
+
+.name-form-list {
+    color: #4815d4;
+}
+
+.informat-name {
+    color: #e6cfcf
 }
 
 /* Regras gerais para telas menores */
