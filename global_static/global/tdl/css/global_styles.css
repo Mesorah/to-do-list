@@ -1,0 +1,564 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Corpo da página */
+body {
+    background: linear-gradient(to right, #150050,  #3D1FF5);
+    /* background: #008DD5; */
+}
+
+/* Cabeçalho */
+header {
+    padding: 0, 20px, 20px, 20px;
+    text-align: center;
+    background: #0d1317ea;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 50px;
+}
+
+header a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Conteúdo principal */
+.main {
+    background: #150050;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%; /* Certifique-se de que a largura é 100% do container pai */
+    box-sizing: border-box; /* Inclui o padding e a borda no cálculo da largura */
+}
+
+.content {
+    background: rgba(0, 0, 0, 0.473);
+}
+
+.to-do-list-header {
+    padding-top: 10px;
+}
+
+/* Estiliza a paginação */
+.pagination {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    margin: 20px 0;
+}
+
+.pagination-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-item {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid #3d9af1;
+    border-radius: 4px;
+    background-color: #3d9af1;
+    color: #ffffff;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.page-link {
+    text-align: center;
+    line-height: 1.5;
+}
+
+.page-current {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.page-item:hover {
+    background-color: #e9ecef;
+    color: #0056b3;
+}
+
+.no-item-list {
+    color: #fff;
+    text-align: center;
+}
+
+/* Formulários e botões */
+form {
+    display: inline;
+}
+
+/* Formulário de busca */
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    margin: 0 auto;
+    padding: 5px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.search-input {
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 1em;
+    width: 250px;
+    outline: none;
+}
+
+.search-button {
+    background: #007bff;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-button i {
+    font-size: 1.2em;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px; /* Espaçamento entre os botões */
+    justify-content: flex-end; /* Alinha os botões à direita */
+    padding: 20px;
+}
+
+.button {
+    display: inline-block;
+    background: #25008b;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    text-decoration: none;
+    cursor: pointer;
+    height: 100%;
+    width: 80px;
+}
+
+.button-page {
+    margin-top: 20px; /* Espaçamento entre o formulário e o botão */
+    height: 50%;
+}
+
+.button-page-update {
+    margin-top: 10px; /* Espaçamento entre o formulário e o botão */
+    height: 20%;
+}
+
+.button-page-add {
+    margin-top: 20px; /* Espaçamento entre o formulário e o botão */
+    height: 10%;
+}
+
+.button-page-add-add {
+    margin-top: 20px; /* Espaçamento entre o formulário e o botão */
+    height: 22%;
+}
+
+.button:hover {
+    background: #357a8e; /* Tom um pouco mais escuro */
+}
+
+/* Formulário de página */
+.form-content {
+    text-align: center;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center; /* Centraliza o formulário horizontalmente */
+    padding: 20px;
+}
+
+.form-page {
+    background: #1c0264;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px; /* Define uma largura máxima para o formulário */
+}
+
+/* Grupos de formulário */
+.form-group {
+    margin-bottom: 20px;
+    color: #ffffffd7;
+}
+
+.form-container {
+    font-size: 1.5em;
+}
+
+.form-container input {
+    width: 80%;
+    height: 35px;
+    font-size: 1em;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.form-group-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.checkbox-container-update {
+    padding-top: 25px;
+    width: 30%;
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: 10%;
+}
+
+.form-group-checkbox-add {
+    display: flex;
+    align-items: center; /* Alinha verticalmente os itens no centro */
+    margin-bottom: 20px;
+}
+
+/* Rodapé */
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #0d1317ea;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+    padding: 8px;
+    font-size: 1.2em;
+}
+
+footer a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+/* Alertas */
+.alert {
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* Informações e botões de ação */
+.info-container {
+    border-radius: 8px; /* Ajuste o valor para o arredondamento desejado */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Alinhe os itens ao início */
+    padding: 15px;
+    border: 1px solid #555; /* Adicione uma borda para visualizar o contorno */
+}
+
+.info-details p {
+    color: white;
+    margin: 5px 0;
+    font-size: 1em;
+}
+
+.info-actions {
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.info-actions label {
+    margin-right: 10px;
+}
+
+/* Oculta o checkbox padrão */
+.info-actions input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.info-actions {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo do checkbox customizado */
+.info-actions input[type="checkbox"] + .custom-checkbox {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura e altura */
+}
+
+/* Estilo do ícone de seleção */
+.info-actions input[type="checkbox"] + .custom-checkbox::after {
+    content: '';
+    position: absolute;
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    width: 12px; /* Ajuste a largura do ícone */
+    height: 12px; /* Ajuste a altura do ícone */
+    background: rgb(52, 52, 255); /* Cor do ícone */
+    border-radius: 2px; /* Borda arredondada do ícone */
+    transform: translate(-50%, -50%); /* Centraliza o ícone */
+    opacity: 0; /* Inicialmente invisível */
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura e altura */
+}
+
+/* Exibe o ícone de seleção quando o checkbox está marcado */
+.info-actions input[type="checkbox"]:checked + .custom-checkbox::after {
+    opacity: 1;
+}
+
+
+/* Estilo do texto ao lado do checkbox */
+.info-actions label {
+    margin-left: 10px;
+}
+
+
+/* authors */
+
+.register-page-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #150050;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.register-header-section {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.register-form-section {
+    display: flex;
+    justify-content: center;
+}
+
+.register-link {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #7e2525;
+    background-color: #ff4d4d; /* Um tom de vermelho mais suave */
+    color: #fff; /* Cor do texto em branco para contraste */
+    text-decoration: none;
+    border-radius: 5px; /* Arredondamento das bordas */
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s; /* Efeito suave na cor de fundo e texto */
+}
+
+.register-link:hover {
+    background-color: #b52a2a; /* Tom de vermelho mais escuro ao passar o mouse */
+    color: #fff; /* Mantém o texto em branco */
+    border-color: #b52a2a; /* Atualiza a cor da borda */
+}
+
+.register-link:active {
+    background-color: #a52a2a; /* Tom ainda mais escuro quando o link é clicado */
+    border-color: #a52a2a;
+}
+
+.user-register-form {
+    width: 100%;
+}
+
+.form-field-group {
+    margin-bottom: 15px;
+}
+
+.form-field-group label {
+    color: #fff;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-field-group input,
+.form-field-group select,
+.form-field-group textarea {
+    width: 96.5%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-field-errors {
+    color: #ff0000;
+    margin-top: 5px;
+}
+
+.form-submit-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-submit-button:hover {
+    background-color: #0056b3;
+}
+
+.logout-user {
+    float: right;
+    margin-top: 27px;
+    margin-right: 40px;
+}
+
+.name-form-list {
+    color: #4815d4;
+}
+
+.informat-name {
+    color: #e6cfcf
+}
+
+/* Regras gerais para telas menores */
+@media (max-width: 768px) {
+    .main {
+        padding: 10px;
+        max-width: 100%; /* Ajuste a largura máxima para 100% */
+    }
+
+    .search-input {
+        width: 200px; /* Reduza a largura do input de busca em telas menores */
+    }
+
+    .form-page {
+        padding: 20px; /* Reduza o padding do formulário em telas menores */
+        max-width: 100%; /* Ajuste a largura máxima para 100% */
+    }
+
+    .form-buttons {
+        flex-direction: column; /* Alinhe os botões em coluna */
+        gap: 10px; /* Aumente o espaçamento entre os botões */
+    }
+
+    .info-container {
+        flex-direction: column; /* Alinhe os itens em coluna */
+        align-items: stretch; /* Estique os itens para ocupar toda a largura */
+    }
+
+    header {
+        padding: 10px 10px;
+    }
+
+    footer {
+        font-size: 1em; /* Ajuste o tamanho da fonte */
+        padding: 5px; /* Ajuste o padding */
+    }
+}
+
+/* Regras para telas muito pequenas (smartphones em retrato) */
+@media (max-width: 480px) {
+    .search-input {
+        width: 100%; /* Ajuste o input de busca para ocupar toda a largura */
+    }
+
+    .info-details p {
+        font-size: 0.9em; /* Reduza o tamanho da fonte em telas menores */
+    }
+
+    .button {
+        width: 100%; /* Ajuste a largura dos botões para ocupar toda a largura disponível */
+        height: auto; /* Ajuste a altura para auto */
+        padding: 10px; /* Ajuste o padding */
+        font-size: 0.9em; /* Reduza o tamanho da fonte */
+    }
+
+    .info-actions {
+        flex-direction: column; /* Alinhe os itens em coluna */
+        align-items: flex-start; /* Alinhe os itens ao início */
+    }
+
+    .info-actions label {
+        margin-left: 0; /* Remova a margem esquerda dos labels */
+    }
+
+    .register-page-container {
+        padding: 10px; /* Reduza o padding */
+        max-width: 100%; /* Ajuste a largura máxima para 100% */
+    }
+}
+
+/* Adiciona espaçamento nas laterais e ajustes */
+@media (max-width: 768px) {
+    .pagination-content {
+        flex-wrap: wrap; /* Permite quebra de linha em itens */
+        justify-content: center;
+    }
+
+    .page-item {
+        padding: 0.5rem 0.5rem; /* Ajuste o padding */
+        font-size: 0.9em; /* Reduza o tamanho da fonte */
+    }
+
+    .form-container input {
+        width: 100%; /* Ajuste a largura dos inputs */
+        font-size: 1em;
+    }
+}

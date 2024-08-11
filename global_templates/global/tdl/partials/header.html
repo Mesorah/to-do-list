@@ -1,0 +1,6 @@
+<div>
+    <h1 class="to-do-list-header"><a href="{% url "tdl:home" %}">To do list</a></h1>
+    {% if user.is_authenticated  %}
+        <a href="{% url 'authors:author_logout' %}" class="register-link logout-user">Logout</a>
+    {% endif %}
+</div>

@@ -1,0 +1,46 @@
+{% extends "global/tdl/pages/base.html" %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block content %}
+    <div class="main">
+        {% if not information %}
+            <h1 class="no-item-list">Adicione algo na sua to-do list :)</h1>
+        {% endif %}
+
+        {% for informat in information %}
+            <div class="content">
+                <div class="info-container">
+                    <div class="info-details">
+                        <p><strong><a href="{% url 'tdl:visualization' informat.id  %}" class="name-form-list">Name:</a></strong> <span class="informat-name">{{ informat.name }}</span></p>
+                        <p><strong>Updated at:</strong> {{ informat.updated_at }}</p>
+                        <p><strong>Created at:</strong> {{ informat.created_at }}</p>
+                        <form action="{% url 'tdl:remove_task_page' informat.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ informat.id }}">
+                            <button type="submit" class="button" onclick="return confirm('Are you sure you want to remove this item?');">Remove</button>
+                        </form>
+                        <form action="{% url 'tdl:update_task' informat.id  %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ informat.id }}">
+                            <button type="submit" class="button">Edit</button>
+                        </form>
+                    </div>
+                    <div class="info-actions">
+                        <input type="checkbox" id="completed-{{ informat.id }}" name="completed" value="completed" {% if informat.completed %}checked{% endif %} disabled>
+                        <span class="custom-checkbox"></span>
+                        <label for="completed-{{ informat.id }}">Completed</label>
+                    </div>
+                </div>
+            </div><br>
+        {% endfor %}
+
+        <div class="form-buttons">
+            <form action="{% url 'tdl:add_task_page' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="item_id" value="{{ informat.id }}">
+                <button type="submit" class="button">Add</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

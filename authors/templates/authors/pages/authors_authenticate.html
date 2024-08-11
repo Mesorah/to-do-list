@@ -1,0 +1,40 @@
+{% extends "global/tdl/pages/base.html" %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block content %}
+    <div class="register-page-container">
+        <div class="register-header-section">
+            <h1>{{ msg }}</h1><br>
+            {% if msg == 'Register' %}
+                <p><a href="{% url "authors:author_login" %}" class="register-link">Login</a></p>
+            {% elif msg == 'Login' %}
+                <p><a href="{% url "authors:author_logout" %}" class="register-link">Logout</a></p>
+            {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="register-form-section">
+            <form class="user-register-form" action="{{ url_action }}" method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-field-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="form-field-errors">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="form-submit-button">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

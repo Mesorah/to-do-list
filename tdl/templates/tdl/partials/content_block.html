@@ -1,0 +1,35 @@
+<div class="main">
+    {% for informat in information %}
+        <div class="content">
+            <div class="info-container">
+                <div class="info-details">
+                    <p><strong>Name:</strong> {{ informat.name }}</p>
+                    <p><strong>Updated at:</strong> {{ informat.updated_at }}</p>
+                    <p><strong>Created at:</strong> {{ informat.created_at }}</p>
+                    <form action="{% url 'tdl:update_task' informat.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ informat.id }}">
+                        <button type="submit" class="button">Update</button>
+                    </form>
+                    <form action="{% url 'tdl:remove_task_page' informat.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ informat.id }}">
+                        <button type="submit" class="button">Remove</button>
+                    </form>
+                </div>
+                <div class="info-actions">
+                    <label for="completed-{{ informat.id }}">Completed</label>
+                    <input type="checkbox" id="completed-{{ informat.id }}" name="completed" value="completed" {% if informat.completed %}checked{% endif %} disabled>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="form-buttons">
+        <form action="{% url 'tdl:add_task_page' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="item_id" value="{{ informat.id }}">
+            <button type="submit" class="button">Add</button>
+        </form>
+    </div>
+</div>

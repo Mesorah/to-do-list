@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}{% endblock title %}</title>
+    {% include "global/tdl/partials/head.html" %}
+</head>
+
+<body>
+    <header>
+        {% include "global/tdl/partials/header.html" %}
+        {% include "tdl/partials/search.html" %}
+    </header>
+
+    <main>
+        {% block content %}{% endblock content %}
+
+        {% include "global/tdl/partials/pagination.html" %}
+    </main>
+
+    <!-- <footer>
+        {% include "global/tdl/partials/footer.html" %}
+    </footer> -->
+</body>
+
+</html>
