@@ -6,12 +6,19 @@ app_name = 'tdl'
 
 
 urlpatterns = [
-    path('',  views.home, name='home'),
-    path('add_task_page', views.add_task_page, name='add_task_page'),
-    path('add_task', views.add_task, name='add_task'),
-    path('remove_task_page/<int:id>/', views.remove_task_page, name='remove_task_page'), # noqa E501
-    path('update_task_page/<int:id>/', views.update_task_page, name='update_task_page'), # noqa E501
-    path('update_task/<int:id>/', views.update_task, name='update_task'),
-    path('item/search/', views.search, name="search"),
-    path('item/<int:id>', views.item_visualization, name="visualization"),
+    path('',  views.ListViewHome.as_view(), name='home'),
+    path('add_task', views.CreateTaskView.as_view(), name='add_task'),
+    path('remove_task_page/<int:id>/',
+         views.RemoveTaskView.as_view(),
+         name='remove_task_page'
+         ),
+    path('update_task_page/<int:id>/',
+         views.UpdateTaskView.as_view(),
+         name='update_task_page'
+         ),
+    path('item/search/', views.ListViewSearch.as_view(), name="search"),
+    path('item/<int:pk>/',
+         views.DetailViewItemVisualization.as_view(),
+         name="visualization"
+         ),
 ]

@@ -8,141 +8,208 @@ from django.http import Http404
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from django.views import View
+from django.views.generic import ListView, DetailView
+from django.utils.decorators import method_decorator
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 2))
 
 
-@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
-def home(request):
-    information = ItemList.objects.filter(user=request.user).order_by('-id')
+class ListViewBase(ListView):
+    template_name = 'tdl/pages/home.html'
+    model = ItemList
+    context_object_name = 'information'
 
-    page_obj, pagination_range = make_pagination(request, information, PER_PAGE) # noqa E501
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
 
-    return render(request, 'tdl/pages/home.html', context={
-        'information': page_obj,
-        'pagination_range': pagination_range,
-        'title': 'Home',
-        'user': request.user
-    })
+        queryset = queryset.filter(
+            user=self.request.user
+        ).order_by('-id')
+
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        page_obj, pagination_range = make_pagination(
+            self.request,
+            context.get('information'),
+            PER_PAGE
+        )
+
+        context.update({
+            'information': page_obj,
+            'pagination_range': pagination_range,
+            'title': 'Home',
+            'user': self.request.user
+        })
+
+        return context
 
 
-@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
-def add_task_page(request):
-    form = ItemForm()
-
-    return render(request, 'tdl/partials/task_page.html', context={
-        'title': 'Add',
-        'url_action': reverse('tdl:add_task'),
-        'msg': 'Add',
-        'form': form,
-    })
+class ListViewHome(ListViewBase):
+    pass
 
 
-@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
-def add_task(request):
-    if request.method == 'POST':
-        form = ItemForm(request.POST)
+class ListViewSearch(ListViewBase):
+    template_name = 'tdl/pages/search.html'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        search_term = self.request.GET.get('q', '').strip()
+
+        if not search_term:
+            raise Http404()
+
+        queryset = queryset.filter(
+            Q(name__icontains=search_term)
+        )
+
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        search_term = self.request.GET.get('q', '').strip()
+
+        context.update({
+            'title': f'Search for "{search_term}" |',
+            'search_term': search_term,
+            'additional_url_query': f'&q={search_term}',
+        })
+
+        return context
+
+
+@method_decorator(
+    login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
+    name='dispatch'
+)
+class CreateTaskView(View):
+    def render_task(self, form):
+        return render(self.request, 'tdl/partials/task_page.html', context={
+            'title': 'Add',
+            'url_action': reverse('tdl:add_task'),
+            'msg': 'Add',
+            'form': form,
+        })
+
+    def get(self, request):
+        form = ItemForm()
+
+        return self.render_task(form)
+
+    def post(self, request):
+        form = ItemForm(self.request.POST)
+
         if form.is_valid():
             completed = form.cleaned_data['completed']
             new_item = ItemList(name=form.cleaned_data['name'])
-            new_item.user = request.user
+            new_item.user = self.request.user
             new_item.completed = completed
             new_item.save()
             return redirect('tdl:home')
-    else:
-        form = ItemForm()
 
-    return render(request, 'tdl/partials/task_page.html', context={
-        'title': 'Add',
-        'url_action': reverse('tdl:add_task'),
-        'msg': 'Add',
-        'form': form,
-    })
+        return self.render_task(form)
 
 
-@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
-def remove_task_page(request, id):
-    item = get_object_or_404(ItemList, pk=id, user=request.user)
-    item.delete()
-    messages.success(request, 'Tarefa removida com sucesso!')
+@method_decorator(
+    login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
+    name='dispatch'
+)
+class RemoveTaskView(View):
+    def post(self, request, id):
+        item = get_object_or_404(ItemList, pk=id, user=request.user)
+        item.delete()
+        messages.success(request, 'Tarefa removida com sucesso!')
 
-    return redirect('tdl:home')
-
-
-@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
-def update_task(request, id):
-    form = UpdateForm(request.POST) # noqa F841
-
-    return redirect('tdl:update_task_page', id=id)
+        return redirect('tdl:home')
 
 
-@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
-def update_task_page(request, id):
-    item = get_object_or_404(ItemList, pk=id, user=request.user)
-    complet = item.completed
+@method_decorator(
+    login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
+    name='dispatch'
+)
+class UpdateTaskView(View):
+    def render_task(self, form, complet, id):
+        return render(self.request, 'tdl/partials/task_page.html', context={
+            'title': 'Edit',
+            'url_action': reverse('tdl:update_task_page', args=[id]),
+            'msg': 'Edit',
+            'form': form,
+            'completed': complet,
+        })
 
-    item_before_update = get_object_or_404(ItemList, pk=id, user=request.user)
-    complet_before_update = item_before_update.completed
+    def get_item(self, id):
+        item = get_object_or_404(ItemList, pk=id, user=self.request.user)
+        return item
 
-    if request.method == 'POST':
-        form = UpdateForm(request.POST, instance=item)
-        if form.is_valid():
-            nome = form.cleaned_data['name']
-            if nome == '' and len(item.name) >= 1:
-                nome = item.name
-            else:
-                item.name = nome
+    def update_task(self, item, form):
+        nome = form.cleaned_data['name']
+        att_completed = form.cleaned_data['completed']
 
-            att_completed = form.cleaned_data['completed']
-            item.completed = complet
-            item.completed = att_completed
-            item.save()
-            messages.success(request, 'Tarefa atualizada com sucesso!')
+        if nome == '' and len(item.name) >= 1:
+            nome = item.name
+        else:
+            item.name = nome
 
-            if item.name != item_before_update.name or item.completed != complet_before_update: # noqa E501
-                return redirect('tdl:home')
-            else:
-                messages.warning(request, 'Houve um erro ao atualizar a tarefa.') # noqa E501
+        item.completed = att_completed
+        item.save()
 
-    else:
+    def get(self, response, id):
+        item = self.get_item(id)
+
         form = UpdateForm(instance=item)
 
-    return render(request, 'tdl/partials/task_page.html', context={
-        'title': 'Edit',
-        'url_action': reverse('tdl:update_task_page', args=[id]),
-        'msg': 'Edit',
-        'form': form,
-        'completed': complet,
-    })
+        return self.render_task(form, item.completed, id)
+
+    def post(self, response, id):
+        item = self.get_item(id)
+        form = UpdateForm(self.request.POST, instance=item)
+
+        old_name = item.name
+        old_completed = item.completed
+
+        if form.is_valid():
+
+            self.update_task(item, form)
+            print(item.name, old_name, item.completed, old_completed)
+
+            if item.name != old_name or item.completed != old_completed:
+                messages.success(
+                    self.request,
+                    'Tarefa atualizada com sucesso!'
+                )
+                return redirect('tdl:home')
+            else:
+                messages.warning(self.request, 'Nenhuma alteração detectada.')
+
+        return self.render_task(form, item, id)
 
 
-def search(request):
-    search_term = request.GET.get('q', '').strip()
+@method_decorator(
+    login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
+    name='dispatch'
+)
+class DetailViewItemVisualization(DetailView):
+    template_name = 'tdl/partials/task_view.html'
+    model = ItemList
+    context_object_name = 'item'
 
-    if not search_term:
-        raise Http404()
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
 
-    information = ItemList.objects.filter(
-        Q(name__icontains=search_term),
-    ).order_by('-id')
+        queryset = queryset.filter(
+            pk=self.kwargs.get('pk'),
+            user=self.request.user)
 
-    page_obj, pagination_range = make_pagination(request, information, PER_PAGE) # noqa E501
+        return queryset
 
-    return render(request, 'tdl/pages/search.html', context={
-        'title': f'Search for "{search_term}" |',
-        'search_term': search_term,
-        'information': page_obj,
-        'pagination_range': pagination_range,
-        'additional_url_query': f'&q={search_term}',
-    })
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
 
+        context.update({
+            'title': 'Item visualization',
+            'item': context.get('item'),
+        })
 
-@login_required(login_url='authors:author_register', redirect_field_name='next') # noqa E501
-def item_visualization(request, id):
-    item = get_object_or_404(ItemList, pk=id, user=request.user)
-
-    return render(request, 'tdl/partials/task_view.html', context={
-        'title': 'Item visualization',
-        'item': item,
-    })
+        return context

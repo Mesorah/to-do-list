@@ -9,7 +9,10 @@
             {% if msg == 'Register' %}
                 <p><a href="{% url "authors:author_login" %}" class="register-link">Login</a></p>
             {% elif msg == 'Login' %}
-                <p><a href="{% url "authors:author_logout" %}" class="register-link">Logout</a></p>
+                <form action="{% url "authors:author_logout" %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="register-link">Logout</button>
+                </form>
             {% endif %}
             {% if messages %}
                 {% for message in messages %}

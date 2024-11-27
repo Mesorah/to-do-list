@@ -6,7 +6,16 @@ app_name = 'authors'
 
 
 urlpatterns = [
-    path('register/',  views.author_register, name='author_register'),
-    path('login/', views.author_login, name='author_login'),
-    path('logout/', views.author_logout, name='author_logout')
+    path('register/',
+         views.AuthorRegisterView.as_view(),
+         name='author_register'
+         ),
+    path('login/',
+         views.AuthorLoginView.as_view(),
+         name='author_login'
+         ),
+    path('logout/',
+         views.AuthorLogoutView.as_view(),
+         name='author_logout'
+         )
 ]
