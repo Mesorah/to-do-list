@@ -10,7 +10,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
 from django.utils.decorators import method_decorator
+from django.urls import reverse_lazy
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 2))
 
@@ -23,9 +25,12 @@ class ListViewBase(ListView):
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
 
-        queryset = queryset.filter(
-            user=self.request.user
-        ).order_by('-id')
+        if self.request.user.is_authenticated:
+            queryset = queryset.filter(
+                user=self.request.user
+            ).order_by('-id')
+        else:
+            queryset = queryset.none()
 
         return queryset
 
@@ -48,7 +53,7 @@ class ListViewBase(ListView):
 
 
 class ListViewHome(ListViewBase):
-    pass
+    template_name = 'tdl/pages/home.html'
 
 
 class ListViewSearch(ListViewBase):
@@ -76,6 +81,28 @@ class ListViewSearch(ListViewBase):
             'search_term': search_term,
             'additional_url_query': f'&q={search_term}',
         })
+
+        return context
+
+
+@method_decorator(
+    login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
+    name='dispatch'
+)
+class CreateTaskViewT(CreateView):
+    model = ItemList
+    form_class = ItemForm
+    success_url = reverse_lazy('tdl:home')
+    template_name = 'tdl/partials/task_page.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        context['msg'] = 'Add'
 
         return context
 
