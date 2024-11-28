@@ -7,13 +7,13 @@ app_name = 'tdl'
 
 urlpatterns = [
     path('',  views.ListViewHome.as_view(), name='home'),
-    path('add_task', views.CreateTaskViewT.as_view(), name='add_task'),
-    path('remove_task_page/<int:id>/',
-         views.RemoveTaskView.as_view(),
+    path('add_task', views.TaskCreateView.as_view(), name='add_task'),
+    path('remove_task_page/<int:pk>/',
+         views.TaskDeleteView.as_view(),
          name='remove_task_page'
          ),
-    path('update_task_page/<int:id>/',
-         views.UpdateTaskView.as_view(),
+    path('update_task_page/<int:pk>/',
+         views.TaskUpdateView.as_view(),
          name='update_task_page'
          ),
     path('item/search/', views.ListViewSearch.as_view(), name="search"),

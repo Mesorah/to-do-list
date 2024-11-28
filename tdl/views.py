@@ -1,16 +1,12 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from tdl.models import ItemList
 from tdl.form import ItemForm, UpdateForm
-from django.urls import reverse
 from utils.pagination import make_pagination
 import os
 from django.http import Http404
 from django.db.models import Q
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views import View
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 
@@ -89,7 +85,7 @@ class ListViewSearch(ListViewBase):
     login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
     name='dispatch'
 )
-class CreateTaskViewT(CreateView):
+class TaskCreateView(CreateView):
     model = ItemList
     form_class = ItemForm
     success_url = reverse_lazy('tdl:home')
@@ -102,7 +98,7 @@ class CreateTaskViewT(CreateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        context['msg'] = 'Add'
+        context['msg'] = 'Create'
 
         return context
 
@@ -111,106 +107,29 @@ class CreateTaskViewT(CreateView):
     login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
     name='dispatch'
 )
-class CreateTaskView(View):
-    def render_task(self, form):
-        return render(self.request, 'tdl/partials/task_page.html', context={
-            'title': 'Add',
-            'url_action': reverse('tdl:add_task'),
-            'msg': 'Add',
-            'form': form,
-        })
+class TaskUpdateView(UpdateView):
+    model = ItemList
+    form_class = UpdateForm
+    success_url = reverse_lazy('tdl:home')
+    template_name = 'tdl/partials/task_page.html'
 
-    def get(self, request):
-        form = ItemForm()
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
 
-        return self.render_task(form)
+        context['msg'] = 'Update'
+        context['completed'] = self.object.completed
 
-    def post(self, request):
-        form = ItemForm(self.request.POST)
-
-        if form.is_valid():
-            completed = form.cleaned_data['completed']
-            new_item = ItemList(name=form.cleaned_data['name'])
-            new_item.user = self.request.user
-            new_item.completed = completed
-            new_item.save()
-            return redirect('tdl:home')
-
-        return self.render_task(form)
+        return context
 
 
 @method_decorator(
     login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
     name='dispatch'
 )
-class RemoveTaskView(View):
-    def post(self, request, id):
-        item = get_object_or_404(ItemList, pk=id, user=request.user)
-        item.delete()
-        messages.success(request, 'Tarefa removida com sucesso!')
-
-        return redirect('tdl:home')
-
-
-@method_decorator(
-    login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
-    name='dispatch'
-)
-class UpdateTaskView(View):
-    def render_task(self, form, complet, id):
-        return render(self.request, 'tdl/partials/task_page.html', context={
-            'title': 'Edit',
-            'url_action': reverse('tdl:update_task_page', args=[id]),
-            'msg': 'Edit',
-            'form': form,
-            'completed': complet,
-        })
-
-    def get_item(self, id):
-        item = get_object_or_404(ItemList, pk=id, user=self.request.user)
-        return item
-
-    def update_task(self, item, form):
-        nome = form.cleaned_data['name']
-        att_completed = form.cleaned_data['completed']
-
-        if nome == '' and len(item.name) >= 1:
-            nome = item.name
-        else:
-            item.name = nome
-
-        item.completed = att_completed
-        item.save()
-
-    def get(self, response, id):
-        item = self.get_item(id)
-
-        form = UpdateForm(instance=item)
-
-        return self.render_task(form, item.completed, id)
-
-    def post(self, response, id):
-        item = self.get_item(id)
-        form = UpdateForm(self.request.POST, instance=item)
-
-        old_name = item.name
-        old_completed = item.completed
-
-        if form.is_valid():
-
-            self.update_task(item, form)
-            print(item.name, old_name, item.completed, old_completed)
-
-            if item.name != old_name or item.completed != old_completed:
-                messages.success(
-                    self.request,
-                    'Tarefa atualizada com sucesso!'
-                )
-                return redirect('tdl:home')
-            else:
-                messages.warning(self.request, 'Nenhuma alteração detectada.')
-
-        return self.render_task(form, item, id)
+class TaskDeleteView(DeleteView):
+    model = ItemList
+    context_object_name = 'item'
+    success_url = reverse_lazy('tdl:home')
 
 
 @method_decorator(
