@@ -7,7 +7,7 @@ app_name = 'authors'
 
 urlpatterns = [
     path('register/',
-         views.AuthorRegisterView.as_view(),
+         views.AuthorRegisterViewT.as_view(),
          name='author_register'
          ),
     path('login/',
