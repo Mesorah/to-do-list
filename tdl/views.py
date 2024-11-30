@@ -4,10 +4,9 @@ from utils.pagination import make_pagination
 import os
 from django.http import Http404
 from django.db.models import Q
-from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 2))
@@ -81,11 +80,8 @@ class ListViewSearch(ListViewBase):
         return context
 
 
-@method_decorator(
-    login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
-    name='dispatch'
-)
-class TaskCreateView(CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'authors:author_register'
     model = ItemList
     form_class = ItemForm
     success_url = reverse_lazy('tdl:home')
@@ -103,11 +99,8 @@ class TaskCreateView(CreateView):
         return context
 
 
-@method_decorator(
-    login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
-    name='dispatch'
-)
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = 'authors:author_register'
     model = ItemList
     form_class = UpdateForm
     success_url = reverse_lazy('tdl:home')
@@ -122,21 +115,15 @@ class TaskUpdateView(UpdateView):
         return context
 
 
-@method_decorator(
-    login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
-    name='dispatch'
-)
-class TaskDeleteView(DeleteView):
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = 'authors:author_register'
     model = ItemList
     context_object_name = 'item'
     success_url = reverse_lazy('tdl:home')
 
 
-@method_decorator(
-    login_required(login_url='authors:author_register', redirect_field_name='next'), # noqa E501
-    name='dispatch'
-)
-class DetailViewItemVisualization(DetailView):
+class DetailViewItemVisualization(LoginRequiredMixin, DetailView):
+    login_url = 'authors:author_register'
     template_name = 'tdl/partials/task_view.html'
     model = ItemList
     context_object_name = 'item'
