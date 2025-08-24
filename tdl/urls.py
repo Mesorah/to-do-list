@@ -1,13 +1,13 @@
 from django.urls import path
-from tdl import views
 
+from tdl.views import site as views
 
 app_name = 'tdl'
 
 
 urlpatterns = [
     path('',  views.ListViewHome.as_view(), name='home'),
-    path('add_task', views.TaskCreateView.as_view(), name='add_task'),
+    path('add_task_page', views.TaskCreateView.as_view(), name='add_task_page'),
     path('remove_task_page/<int:pk>/',
          views.TaskDeleteView.as_view(),
          name='remove_task_page'

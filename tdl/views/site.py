@@ -1,13 +1,15 @@
-from tdl.models import ItemList
-from tdl.form import ItemForm, UpdateForm
-from utils.pagination import make_pagination
 import os
-from django.http import Http404
-from django.db.models import Q
-from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from django.http import Http404
 from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from tdl.form import ItemForm, UpdateForm
+from tdl.models import ItemList
+from utils.pagination import make_pagination
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 2))
 

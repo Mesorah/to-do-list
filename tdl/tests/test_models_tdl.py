@@ -1,8 +1,9 @@
-from django.test import TestCase, Client
-from tdl.models import Author, ItemList
-from tdl.form import ItemForm
-from django.urls import reverse
 from django.contrib.auth.models import User
+from django.test import Client, TestCase
+from django.urls import reverse
+
+from tdl.form import ItemForm
+from tdl.models import Author, ItemList
 
 
 class AuthorModelTest(TestCase):
@@ -38,7 +39,7 @@ class ItemListModelTest(TestCase):
 
     def test_add_task(self):
         response = self.client.post(
-            reverse('tdl:add_task'),
+            reverse('tdl:add_task_page'),
             {'name': 'New Task', 'completed': False})
         self.assertEqual(response.status_code, 302)  # Redirects after POST
         self.assertTrue(ItemList.objects.filter(name='New Task').exists())
@@ -87,7 +88,7 @@ class AddTaskViewTest(TestCase):
         }
 
         # Envia uma requisição POST com os dados do formulário
-        response = self.client.post(reverse('tdl:add_task'), data=form_data)
+        response = self.client.post(reverse('tdl:add_task_page'), data=form_data)
 
         # Verifica se o item foi realmente criado
         self.assertEqual(ItemList.objects.count(), 1)
@@ -105,7 +106,7 @@ class AddTaskViewTest(TestCase):
         }
 
         # Envia uma requisição POST com dados inválidos
-        response = self.client.post(reverse('tdl:add_task'), data=form_data)
+        response = self.client.post(reverse('tdl:add_task_page'), data=form_data)
 
         # Verifica se o item não foi criado
         self.assertEqual(ItemList.objects.count(), 0)
@@ -121,7 +122,7 @@ class AddTaskViewTest(TestCase):
         self.assertIn('Este campo é obrigatório.', form.errors['name'])
 
     def test_add_task_get(self):
-        response = self.client.get(reverse('tdl:add_task'))
+        response = self.client.get(reverse('tdl:add_task_page'))
 
         # Verifica se a resposta é bem-sucedida
         self.assertEqual(response.status_code, 200)
@@ -138,7 +139,7 @@ class AddTaskViewTest(TestCase):
             'completed': True
         }
 
-        response = self.client.post(reverse('tdl:add_task'), data=form_data)
+        response = self.client.post(reverse('tdl:add_task_page'), data=form_data)
 
         # Verifica se o item foi criado
         self.assertEqual(ItemList.objects.count(), 1)
@@ -154,7 +155,7 @@ class AddTaskViewTest(TestCase):
             'name': ''  # Campo obrigatório, portanto inválido
         }
 
-        response = self.client.post(reverse('tdl:add_task'), data=form_data)
+        response = self.client.post(reverse('tdl:add_task_page'), data=form_data)
 
         # Verifica se o item não foi criado
         self.assertEqual(ItemList.objects.count(), 0)

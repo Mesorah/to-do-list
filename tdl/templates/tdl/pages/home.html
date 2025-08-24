@@ -36,7 +36,7 @@
         {% endfor %}
 
         <div class="form-buttons">
-            <form action="{% url 'tdl:add_task' %}" method="POST">
+            <form action="{% url 'tdl:add_task_page' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="item_id" value="{{ informat.id }}">
                 <button type="submit" class="button">Add</button>
