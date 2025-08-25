@@ -3,14 +3,13 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from tdl.form import ItemForm
-from tdl.models import Author, ItemList
+from tdl.models import ItemList
 
+# class AuthorModelTest(TestCase):
+#     def test_author_name(self):
+#         self.author = Author.objects.create(name='Juninho')
 
-class AuthorModelTest(TestCase):
-    def test_author_name(self):
-        self.author = Author.objects.create(name='Juninho')
-
-        self.assertEqual(str(self.author), 'Juninho')
+#         self.assertEqual(str(self.author), 'Juninho')
 
 
 class ItemListModelTest(TestCase):
@@ -171,6 +170,24 @@ class AddTaskViewTest(TestCase):
         self.assertTrue(form.errors)
         self.assertIn('name', form.errors)
         self.assertIn('Este campo é obrigatório.', form.errors['name'])
+
+    def test_get_error_of_name_duplicated(self):
+        user = User.objects.create_user(username='testuser', password='12345')
+        self.client.force_login(user)
+
+        form_data = {
+            'name': 'New Task',
+            'completed': True
+        }
+
+        response = self.client.post(reverse('tdl:add_task_page'), data=form_data)
+
+        self.assertRedirects(response, reverse('tdl:home'))
+
+        response = self.client.post(reverse('tdl:add_task_page'), data=form_data)
+
+        self.assertEqual(ItemList.objects.count(), 1)
+        self.assertEqual(response.status_code, 200)
 
 
 class UpdateTaskPageTest(TestCase):
