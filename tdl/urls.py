@@ -29,10 +29,21 @@ urlpatterns = [
           name="visualization"
      ),
 
-     path('api/', views.ItemApiList.as_view(), name='item_api_list'),
+     path(
+         'api/',
+         views.ItemAPIv2ViewSet.as_view({
+             'get': 'list',
+             'post': 'create'
+         }),
+         name='item_api_list'
+        ),
      path(
         'api/<int:pk>/',
-        views.ItemApiDetail.as_view(),
+        views.ItemAPIv2ViewSet.as_view({
+             'get': 'retrieve',
+             'patch': 'partial_update',
+             'delete': 'destroy'
+         }),
         name='item_api_detail'
      ),
      path(
