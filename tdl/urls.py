@@ -29,8 +29,12 @@ urlpatterns = [
           name="visualization"
      ),
 
-     path('api/', views.item_api_list, name='item_api_list'),
-     path('api/<int:pk>/', views.item_api_detail, name='item_api_detail'),
+     path('api/', views.ItemApiList.as_view(), name='item_api_list'),
+     path(
+        'api/<int:pk>/',
+        views.ItemApiDetail.as_view(),
+        name='item_api_detail'
+     ),
      path(
          'api/user/<int:pk>/',
          views.item_api_user_detail,
