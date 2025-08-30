@@ -30,21 +30,39 @@ def item_api_list(request):
         serializer.save()
 
         return Response(
-            serializer.validated_data,
+            serializer.data,
             status=status.HTTP_201_CREATED
         )
 
 
-@api_view()
+@api_view(http_method_names=['GET', 'PATCH', 'DELETE'])
 def item_api_detail(request, pk):
     item = get_object_or_404(ItemList, pk=pk)
 
-    serializer = ItemSerializer(
-        instance=item,
-        context={'request': request}
-    )
+    if request.method == 'GET':
+        serializer = ItemSerializer(
+            instance=item,
+            context={'request': request}
+        )
 
-    return Response(serializer.data)
+        return Response(serializer.data)
+
+    elif request.method == 'PATCH':
+        serializer = ItemSerializer(
+            instance=item,
+            data=request.data,
+            context={'request': request},
+            partial=True
+        )
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data)
+
+    elif request.method == 'DELETE':
+        item.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view()
