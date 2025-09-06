@@ -1,13 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
-from rest_framework.generics import (  # noqa E501
-    ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView,
-)
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+
+from tdl.permissions import IsOwner
 
 from ..models import ItemList
 from ..serializers import ItemSerializer, UserSerializer
@@ -20,9 +19,16 @@ class ItemApiPagination(PageNumberPagination):
 
 
 class ItemAPIViewSet(ModelViewSet):
-    queryset = ItemList.objects.all()
+    queryset = ItemList.objects.all().order_by('-id')
     serializer_class = ItemSerializer
     pagination_class = ItemApiPagination
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_permissions(self):
+        if self.request.method in ['PATCH', 'DELETE']:
+            return [IsOwner()]
+
+        return super().get_permissions()
 
 
 @api_view()
