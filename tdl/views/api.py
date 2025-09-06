@@ -19,7 +19,7 @@ class ItemApiPagination(PageNumberPagination):
     page_size = 5
 
 
-class ItemAPIv2ViewSet(ModelViewSet):
+class ItemAPIViewSet(ModelViewSet):
     queryset = ItemList.objects.all()
     serializer_class = ItemSerializer
     pagination_class = ItemApiPagination
