@@ -30,6 +30,9 @@ class ItemAPIViewSet(ModelViewSet):
 
         return super().get_permissions()
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 @api_view()
 def item_api_user_detail(request, pk):
