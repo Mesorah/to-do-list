@@ -23,6 +23,7 @@ class ItemAPIViewSet(ModelViewSet):
     serializer_class = ItemSerializer
     pagination_class = ItemApiPagination
     permission_classes = [IsAuthenticatedOrReadOnly]
+    http_method_names = ['GET', 'OPTIONS', 'HEAD', 'PATCH', 'POST', 'DELETE']
 
     def get_permissions(self):
         if self.request.method in ['PATCH', 'DELETE']:
