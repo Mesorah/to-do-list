@@ -20,3 +20,5 @@ def create_items(qtd=1):
             user=user,
             completed=True
         )
+
+    return user
